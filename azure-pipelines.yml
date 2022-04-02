@@ -15,12 +15,19 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+
 - task: NuGetToolInstaller@1
 
 - task: NuGetCommand@2
   inputs:
     restoreSolution: '$(solution)'
-
+    
+- task: DotNetCoreCLI@2
+  inputs:
+    command: test
+    projects: '**/*SimpleAPI.Test/*.csproj'
+    arguments: '--configuration $(buildConfiguration)'
+    
 - task: VSBuild@1
   inputs:
     solution: '$(solution)'
